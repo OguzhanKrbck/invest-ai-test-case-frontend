@@ -7,6 +7,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import styles from '@/styles/UserDetail.module.css';
 import ThemeToggle from '@/components/ThemeToggle';
 import { useTheme } from '@/context/ThemeContext';
+import { useSelector } from 'react-redux';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,7 +24,6 @@ export default function UserDetail() {
   const { id } = router.query;
   const userId = parseInt(id);
   
-  const [allBooks, setAllBooks] = useState([]);
   const [user, setUser] = useState(null);
   const [books, setBooks] = useState({
     present: [],
@@ -53,15 +53,7 @@ export default function UserDetail() {
     setBooks(data?.payload?.books);
   };
 
-  const fetchAllBooks = async () => {
-    const response = await fetch('/api/books');
-    const data = await response.json();
-    setAllBooks(data?.payload);
-  };
-
-  useEffect(() => {
-    fetchAllBooks();
-  }, []);
+  const { books: allBooks } = useSelector((state) => state.objectCache);
 
   useEffect(() => {
     if (id) fetchUserBooks();
@@ -127,7 +119,7 @@ export default function UserDetail() {
   if (!mounted || !user) {
     return <div className={styles.loading}>Loading...</div>;
   }
-  
+
   return (
     <>
       <Head>
@@ -256,7 +248,7 @@ export default function UserDetail() {
           <section className={styles.section}>
             <h3>All Books</h3>
             <div className={styles.bookGrid}>
-              {allBooks?.map(book => (
+              {allBooks && allBooks?.map(book => (
                 <Link href={`/books/${book.id}?userId=${userId}`} key={book.id}>
                   <div className={styles.bookCard}>
                     <div className={styles.bookCoverContainer}>

@@ -11,12 +11,12 @@ export const objectCacheSlice = createSlice({
   reducers: {
     // Books için reducerlar
     setBooks: (state, action) => {
-      state.books.push(action.payload);
+      state.books = action.payload;
     },
     
     // Users için reducerlar
     setUsers: (state, action) => {
-      state.users.push(action.payload);
+      state.users= action.payload;
     },
   }
 });

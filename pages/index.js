@@ -2,10 +2,11 @@ import Head from "next/head";
 import Image from "next/image";
 import { Geist, Geist_Mono } from "next/font/google";
 import styles from "@/styles/Home.module.css";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import ThemeToggle from '@/components/ThemeToggle';
-import { useTheme } from '@/context/ThemeContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchBooks, fetchUsers } from '../store/objectCacheThunks';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,20 +19,16 @@ const geistMono = Geist_Mono({
 });
 
 export default function Home() {
-  const [users, setUsers] = useState([]);
   const [mounted, setMounted] = useState(false);
 
-  const fetchUsers = async () => {
-    const response = await fetch('/api/users');
-    const data = await response.json();
-    setUsers(data?.payload);
-  };
-
+  const dispatch = useDispatch();
+  const { users } = useSelector((state) => state.objectCache);
+  
   useEffect(() => {
-    fetchUsers();
+    dispatch(fetchBooks());
+    dispatch(fetchUsers());
   }, []);
 
-  // Hidrojenizasyon sorunlarını önlemek için
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -60,7 +57,8 @@ export default function Home() {
           <h2>User List</h2>
           
           <div className={styles.userGrid}>
-            {users.map((user) => (
+
+            {users && users?.map((user) => (
               <Link href={`/users/${user.id}`} key={user.id} className={styles.userCardLink}>
                 <div className={styles.userCard}>
                   <div className={styles.userImageContainer}>
