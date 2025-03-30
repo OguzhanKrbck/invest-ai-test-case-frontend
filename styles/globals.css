@@ -16,6 +16,8 @@
   --heading-color: #111827;
   --primary-color: #3366ff;
   --primary-hover-color: #2952cc;
+  --dialog-cancel: #e0e0e0;
+  --dialog-box: #ffffff;
 }
 
 .dark-mode {
@@ -36,6 +38,8 @@
   --heading-color: #e0e0e0;
   --primary-color: #4d7aff;
   --primary-hover-color: #3366ff;
+  --dialog-cancel: #444444;
+  --dialog-box: #36454F;
 }
 
 * {

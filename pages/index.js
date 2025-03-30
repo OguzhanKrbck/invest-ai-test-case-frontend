@@ -17,62 +17,19 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// Kullanıcılar için mock data
-const mockUsers = [
-  {
-    id: 1,
-    name: "Ahmet Yılmaz",
-    email: "ahmet@example.com",
-    memberSince: "2022-01-15",
-    borrowedBooks: 3,
-    image: "https://randomuser.me/api/portraits/men/1.jpg"
-  },
-  {
-    id: 2,
-    name: "Ayşe Demir",
-    email: "ayse@example.com",
-    memberSince: "2022-03-22",
-    borrowedBooks: 1,
-    image: "https://randomuser.me/api/portraits/women/2.jpg"
-  },
-  {
-    id: 3,
-    name: "Mehmet Kaya",
-    email: "mehmet@example.com",
-    memberSince: "2021-11-05",
-    borrowedBooks: 5,
-    image: "https://randomuser.me/api/portraits/men/3.jpg"
-  },
-  {
-    id: 4,
-    name: "Zeynep Şahin",
-    email: "zeynep@example.com",
-    memberSince: "2022-06-10",
-    borrowedBooks: 2,
-    image: "https://randomuser.me/api/portraits/women/4.jpg"
-  },
-  {
-    id: 5,
-    name: "Ali Öztürk",
-    email: "ali@example.com",
-    memberSince: "2021-08-17",
-    borrowedBooks: 4,
-    image: "https://randomuser.me/api/portraits/men/5.jpg"
-  },
-  {
-    id: 6,
-    name: "Fatma Yıldız",
-    email: "fatma@example.com",
-    memberSince: "2022-04-30",
-    borrowedBooks: 0,
-    image: "https://randomuser.me/api/portraits/women/6.jpg"
-  },
-];
-
 export default function Home() {
-  const [users] = useState(mockUsers);
-  const { darkMode } = useTheme();
+  const [users, setUsers] = useState([]);
   const [mounted, setMounted] = useState(false);
+
+  const fetchUsers = async () => {
+    const response = await fetch('/api/users');
+    const data = await response.json();
+    setUsers(data?.payload);
+  };
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
 
   // Hidrojenizasyon sorunlarını önlemek için
   useEffect(() => {
@@ -118,8 +75,7 @@ export default function Home() {
                   <div className={styles.userInfo}>
                     <h3>{user.name}</h3>
                     <p><strong>E-posta:</strong> {user.email}</p>
-                    <p><strong>Üyelik Tarihi:</strong> {user.memberSince}</p>
-                    <p><strong>Ödünç Alınan Kitap:</strong> {user.borrowedBooks}</p>
+                    <p><strong>Üyelik Tarihi:</strong> {new Date(user.createdAt).toLocaleDateString('tr-TR')}</p>
                   </div>
                 </div>
               </Link>
