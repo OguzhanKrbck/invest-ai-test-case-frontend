@@ -7,13 +7,16 @@
   --button-secondary-hover: #f2f2f2;
 
   display: grid;
-  grid-template-rows: 20px 1fr 20px;
+  grid-template-rows: auto 1fr auto;
   align-items: center;
   justify-items: center;
   min-height: 100svh;
-  padding: 80px;
-  gap: 64px;
+  padding: 40px;
+  gap: 32px;
   font-family: var(--font-geist-sans);
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: var(--transition);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -27,11 +30,22 @@
   }
 }
 
+.header {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px 20px 20px;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 20px;
+}
+
 .main {
   display: flex;
   flex-direction: column;
   gap: 32px;
-  grid-row-start: 2;
+  width: 100%;
+  max-width: 1200px;
 }
 
 .main ol {
@@ -159,10 +173,78 @@ a.secondary {
     align-items: center;
     justify-content: center;
   }
+
+  .userGrid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
   .logo {
     filter: invert();
   }
+}
+
+.title {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.userGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.userCard {
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px var(--card-shadow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: var(--card-background);
+}
+
+.userCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 15px var(--card-hover-shadow);
+}
+
+.userImageContainer {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  background-color: var(--section-background);
+}
+
+.userImage {
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.userInfo {
+  padding: 15px;
+}
+
+.userInfo h3 {
+  margin: 0 0 10px 0;
+  font-size: 1.2rem;
+  color: var(--text-color);
+}
+
+.userInfo p {
+  margin: 5px 0;
+  font-size: 0.9rem;
+  color: var(--text-color);
+}
+
+.userCardLink {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  cursor: pointer;
 }

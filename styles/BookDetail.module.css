@@ -1,0 +1,297 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: var(--font-geist-sans);
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: var(--transition);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+  position: relative;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.backLink {
+  text-decoration: none;
+  color: var(--link-color);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  transition: var(--transition);
+  position: relative;
+}
+
+.backLink:hover {
+  color: var(--link-hover-color);
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+}
+
+.title {
+  width: auto;
+  text-align: center;
+  font-size: 2rem;
+  margin: 0;
+  color: var(--text-color);
+}
+
+.bookDetail {
+  display: flex;
+  gap: 3rem;
+  margin-bottom: 3rem;
+  padding: 2rem;
+  background-color: var(--section-background);
+  border-radius: 10px;
+  box-shadow: 0 2px 8px var(--card-shadow);
+}
+
+.bookImage {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.cover {
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.bookInfo {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.bookTitle {
+  font-size: 2.2rem;
+  margin: 0 0 1.5rem 0;
+  color: var(--heading-color);
+}
+
+.bookMeta {
+  margin-bottom: 2rem;
+}
+
+.bookMeta p {
+  font-size: 1.1rem;
+  margin: 0.8rem 0;
+}
+
+.ratingContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1rem 0;
+  font-size: 1.1rem;
+}
+
+.stars {
+  display: flex;
+  align-items: center;
+  margin-left: 0.5rem;
+}
+
+.star {
+  color: gold;
+  font-size: 1.5rem;
+  line-height: 1;
+  margin-right: 2px;
+}
+
+.emptyStar {
+  color: #ccc;
+  font-size: 1.5rem;
+  line-height: 1;
+  margin-right: 2px;
+}
+
+.ratingValue {
+  font-size: 1rem;
+  color: var(--text-color);
+  opacity: 0.8;
+  margin-left: 0.5rem;
+}
+
+.ownerInfo {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.ownerInfo h3 {
+  font-size: 1.3rem;
+  margin: 0 0 1rem 0;
+  color: var(--heading-color);
+}
+
+.owner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.ownerImage {
+  flex-shrink: 0;
+}
+
+.avatar {
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.ownerDetails {
+  display: flex;
+  flex-direction: column;
+}
+
+.ownerName {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--link-color);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.ownerName:hover {
+  color: var(--link-hover-color);
+  text-decoration: underline;
+}
+
+.ownerEmail {
+  font-size: 0.9rem;
+  color: var(--text-color);
+  opacity: 0.8;
+  margin: 0.3rem 0 0 0;
+}
+
+.availability {
+  font-size: 1.1rem;
+  margin: 1.5rem 0;
+}
+
+.available {
+  color: #4caf50;
+  font-weight: 600;
+}
+
+.notAvailable {
+  color: #f44336;
+  font-weight: 600;
+}
+
+.bookActions {
+  display: flex;
+  gap: 1rem;
+  margin-top: auto;
+}
+
+.borrowButton, .favoriteButton {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.borrowButton {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.borrowButton:hover {
+  background-color: var(--primary-hover-color);
+}
+
+.favoriteButton {
+  background-color: transparent;
+  border: 2px solid var(--border-color);
+  color: var(--text-color);
+}
+
+.favoriteButton:hover {
+  background-color: var(--border-color);
+}
+
+.bookDescription {
+  padding: 2rem;
+  background-color: var(--card-background);
+  border-radius: 10px;
+  box-shadow: 0 2px 8px var(--card-shadow);
+}
+
+.bookDescription h3 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  color: var(--heading-color);
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 0.8rem;
+}
+
+.bookDescription p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin: 1rem 0;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 1.2rem;
+  color: var(--text-color);
+  background-color: var(--background-color);
+}
+
+@media (max-width: 900px) {
+  .bookDetail {
+    flex-direction: column;
+  }
+  
+  .bookImage {
+    align-items: center;
+  }
+  
+  .cover {
+    width: 200px;
+    height: 300px;
+  }
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 1rem;
+  }
+  
+  .header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .title {
+    font-size: 1.5rem;
+  }
+  
+  .bookDetail {
+    padding: 1.5rem;
+  }
+  
+  .bookTitle {
+    font-size: 1.8rem;
+  }
+} 
