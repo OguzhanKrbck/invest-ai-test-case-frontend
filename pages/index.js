@@ -43,8 +43,8 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Kütüphane Yönetim Sistemi</title>
-        <meta name="description" content="Kütüphane kullanıcı yönetimi" />
+        <title>Library Management System</title>
+        <meta name="description" content="Library user management" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -52,12 +52,12 @@ export default function Home() {
         className={`${styles.page} ${geistSans.variable} ${geistMono.variable}`}
       >
         <header className={styles.header}>
-          <h1 className={styles.title}>Kütüphane Yönetim Sistemi</h1>
+          <h1 className={styles.title}>Library Management System</h1>
           <ThemeToggle />
         </header>
         
         <main className={styles.main}>
-          <h2>Kullanıcı Listesi</h2>
+          <h2>User List</h2>
           
           <div className={styles.userGrid}>
             {users.map((user) => (
@@ -74,8 +74,8 @@ export default function Home() {
                   </div>
                   <div className={styles.userInfo}>
                     <h3>{user.name}</h3>
-                    <p><strong>E-posta:</strong> {user.email}</p>
-                    <p><strong>Üyelik Tarihi:</strong> {new Date(user.createdAt).toLocaleDateString('tr-TR')}</p>
+                    <p><strong>Email:</strong> {user.email}</p>
+                    <p><strong>Membership Date:</strong> {new Date(user.createdAt).toLocaleDateString('tr-TR')}</p>
                   </div>
                 </div>
               </Link>
@@ -83,7 +83,7 @@ export default function Home() {
           </div>
         </main>
         <footer className={styles.footer}>
-          <p>© 2025 Kütüphane Yönetim Sistemi</p>
+          <p>© 2025 Library Management System</p>
         </footer>
       </div>
     </>

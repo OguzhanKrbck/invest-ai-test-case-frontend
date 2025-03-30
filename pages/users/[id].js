@@ -109,11 +109,11 @@ export default function UserDetail() {
       if (data.statusCode) {
         fetchUserBooks();
       } else {
-        alert('Kitap iade edilirken bir hata oluştu: ' + data.message);
+        alert('An error occurred while returning the book: ' + data.message);
       }
     } catch (error) {
-      console.error('Kitap iade hatası:', error);
-      alert('Kitap iade edilirken bir hata oluştu.');
+      console.error('Book return error:', error);
+      alert('An error occurred while returning the book.');
     } finally {
       setIsReturning(false);
       setReturningBookId(null);
@@ -125,23 +125,23 @@ export default function UserDetail() {
   };
   
   if (!mounted || !user) {
-    return <div className={styles.loading}>Yükleniyor...</div>;
+    return <div className={styles.loading}>Loading...</div>;
   }
   
   return (
     <>
       <Head>
-        <title>{user.name} - Kullanıcı Detayları</title>
-        <meta name="description" content={`${user.name} kullanıcı bilgileri`} />
+        <title>{user.name} - User Details</title>
+        <meta name="description" content={`${user.name} user information`} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className={`${styles.container} ${geistSans.variable} ${geistMono.variable}`}>
         <header className={styles.header}>
           <Link href="/" className={styles.backLink}>
-            ← Ana Sayfaya Dön
+            ← Return to Home Page
           </Link>
-          <h1 className={styles.title}>Kullanıcı Detayları</h1>
+          <h1 className={styles.title}>User Details</h1>
           <div className={styles.headerRight}>
             <ThemeToggle />
           </div>
@@ -159,14 +159,14 @@ export default function UserDetail() {
           </div>
           <div className={styles.profileInfo}>
             <h2>{user.name}</h2>
-            <p><strong>E-posta:</strong> {user.email}</p>
-            <p><strong>Üyelik Tarihi:</strong> {user.memberSince}</p>
+            <p><strong>Email:</strong> {user.email}</p>
+            <p><strong>Membership Date:</strong> {user.memberSince}</p>
           </div>
         </div>
         
         <div className={styles.bookSections}>
           <section className={styles.section}>
-            <h3>Şu Anda Ödünç Aldığı Kitaplar</h3>
+            <h3>Currently Borrowed Books</h3>
             {books?.present?.length > 0 ? (
               <div className={styles.bookGrid}>
                 {books?.present?.map(borrowInfo => (
@@ -186,7 +186,7 @@ export default function UserDetail() {
                           <h4>{borrowInfo.book.name}</h4>
                           <p>{borrowInfo.book.author}</p>
                           <p className={styles.borrowInfo}>
-                            <small>Ödünç alma: {new Date(borrowInfo.borrowedAt).toLocaleDateString('tr-TR')}</small>
+                            <small>Borrowed At: {new Date(borrowInfo.borrowedAt).toLocaleDateString('tr-TR')}</small>
                           </p>
                         </div>
                       </div>
@@ -198,20 +198,20 @@ export default function UserDetail() {
                         handleReturnClick(borrowInfo);
                       }}
                       disabled={isReturning && returningBookId === borrowInfo.id}
-                      title="İade Et"
+                      title="Return"
                     >
-                      {isReturning && returningBookId === borrowInfo.id ? 'İade Ediliyor...' : 'İade Et'}
+                      {isReturning && returningBookId === borrowInfo.id ? 'Returning...' : 'Return'}
                     </button>
                   </div>
                 ))}
               </div>
             ) : (
-              <p className={styles.emptyMessage}>Şu anda ödünç aldığı kitap bulunmuyor.</p>
+              <p className={styles.emptyMessage}>No books currently borrowed.</p>
             )}
           </section>
           
           <section className={styles.section}>
-            <h3>Önceden Ödünç Aldığı Kitaplar</h3>
+            <h3>Previously Borrowed Books</h3>
             {books?.past?.length > 0 ? (
               <div className={styles.bookGrid}>
                 {books?.past?.map(borrowInfo => (
@@ -232,14 +232,14 @@ export default function UserDetail() {
                         <div className={styles.borrowDetails}>
                           <p className={styles.borrowDates}>
                             <small>
-                              Ödünç: {new Date(borrowInfo.borrowedAt).toLocaleDateString('tr-TR')}
+                              Borrowed: {new Date(borrowInfo.borrowedAt).toLocaleDateString('tr-TR')}
                               <br />
-                              İade: {new Date(borrowInfo.returnedAt).toLocaleDateString('tr-TR')}
+                              Returned: {new Date(borrowInfo.returnedAt).toLocaleDateString('tr-TR')}
                             </small>
                           </p>
                           {borrowInfo.score && (
                             <p className={styles.scoreInfo}>
-                              <span className={styles.score}>Puan: {borrowInfo.score}/10</span>
+                              <span className={styles.score}>Score: {borrowInfo.score}/10</span>
                             </p>
                           )}
                         </div>
@@ -249,12 +249,12 @@ export default function UserDetail() {
                 ))}
               </div>
             ) : (
-              <p className={styles.emptyMessage}>Önceden ödünç aldığı kitap bulunmuyor.</p>
+              <p className={styles.emptyMessage}>No previously borrowed books.</p>
             )}
           </section>
           
           <section className={styles.section}>
-            <h3>Tüm Kitaplar</h3>
+            <h3>All Books</h3>
             <div className={styles.bookGrid}>
               {allBooks?.map(book => (
                 <Link href={`/books/${book.id}?userId=${userId}`} key={book.id}>
@@ -283,9 +283,9 @@ export default function UserDetail() {
         {showScoreDialog && activeBook && (
           <div className={styles.dialogOverlay}>
             <div className={styles.dialogContent}>
-              <h3>Kitap İade ve Puanlama</h3>
-              <p><strong>{activeBook.book.name}</strong> kitabını iade etmek üzeresiniz.</p>
-              <p>Lütfen kitabı puanlayın:</p>
+              <h3>Rate Book</h3>
+              <p><strong>{activeBook.book.name}</strong> You are about to return this book.</p>
+              <p>Please rate this book:</p>
               
               <div className={styles.scoreSelector}>
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((score) => (
@@ -304,14 +304,14 @@ export default function UserDetail() {
                   className={styles.cancelButton} 
                   onClick={closeDialog}
                 >
-                  İptal
+                  Cancel
                 </button>
                 <button 
                   disabled={!selectedScore || isReturning}
                   className={styles.confirmButton} 
                   onClick={confirmReturn}
                 >
-                  İade Et
+                  Return
                 </button>
               </div>
             </div>
@@ -321,15 +321,15 @@ export default function UserDetail() {
         {showSuccessDialog && (
           <div className={styles.dialogOverlay}>
             <div className={styles.dialogContent}>
-              <h3>İşlem Başarılı</h3>
-              <p>Kitap başarıyla iade edildi.</p>
+              <h3>Operation Successful</h3>
+              <p>Book has been returned successfully.</p>
               
               <div className={styles.dialogActions}>
                 <button 
                   className={styles.confirmButton} 
                   onClick={closeSuccessDialog}
                 >
-                  Tamam
+                  OK
                 </button>
               </div>
             </div>

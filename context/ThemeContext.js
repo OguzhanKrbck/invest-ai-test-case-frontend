@@ -6,10 +6,10 @@ export function ThemeProvider({ children }) {
   const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
-    // Tarayıcı tercihine göre başlangıç teması
+    // Initial theme based on browser preference
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     
-    // localStorage'da tema tercihi varsa onu al, yoksa tarayıcı tercihini kullan
+    // Get theme preference from localStorage if available, otherwise use browser preference
     const savedTheme = localStorage.getItem('darkMode');
     if (savedTheme !== null) {
       setDarkMode(savedTheme === 'true');
@@ -19,18 +19,18 @@ export function ThemeProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    // Root element'e dark-mode class'ı ekle/kaldır
+    // Add/remove dark-mode class to root element
     if (darkMode) {
       document.documentElement.classList.add('dark-mode');
     } else {
       document.documentElement.classList.remove('dark-mode');
     }
     
-    // Kullanıcı tercihini localStorage'a kaydet
+    // Save user preference to localStorage
     localStorage.setItem('darkMode', darkMode);
   }, [darkMode]);
 
-  // Tema değiştirme fonksiyonu
+  // Theme toggle function
   const toggleDarkMode = () => {
     setDarkMode(prevMode => !prevMode);
   };

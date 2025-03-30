@@ -4,6 +4,7 @@ const nextConfig = {
   images: {
     domains: ['randomuser.me', 'picsum.photos'],
   },
+  devIndicators: false,
 };
 
 export default nextConfig;

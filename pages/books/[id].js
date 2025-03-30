@@ -37,14 +37,12 @@ export default function BookDetail() {
     setBook(data?.payload);
   };
 
-  // Ödünç alma işlemi için onay dialogunu göster
   const handleBorrowClick = () => {
     setDialogType('confirm');
-    setDialogMessage(`"${book.name}" kitabını ödünç almak istediğinize emin misiniz?`);
+    setDialogMessage(`Are you sure you want to borrow "${book.name}"?`);
     setShowDialog(true);
   };
 
-  // Ödünç alma işlemini gerçekleştir
   const borrowBook = async () => {
     try {
       setShowDialog(false); // Onay dialogunu kapat
@@ -59,19 +57,19 @@ export default function BookDetail() {
       
       if (response.ok) {
         setDialogType('result');
-        setDialogMessage('Kitap başarıyla ödünç alındı!');
+        setDialogMessage('Book successfully borrowed!');
         setShowDialog(true);
         await fetchBookData(bookId); // Kitap verilerini güncelle
       } else {
         const error = await response.json();
         setDialogType('result');
-        setDialogMessage(`Hata: ${error.message || 'Kitap ödünç alınamadı'}`);
+        setDialogMessage(`Error: ${error.message || 'Book could not be borrowed'}`);
         setShowDialog(true);
       }
     } catch (error) {
-      console.error('Ödünç alma işlemi sırasında hata:', error);
+      console.error('Error during borrowing process:', error);
       setDialogType('result');
-      setDialogMessage('Kitap ödünç alınırken bir hata oluştu.');
+      setDialogMessage('An error occurred while borrowing the book.');
       setShowDialog(true);
     } finally {
       setIsLoading(false);
@@ -86,43 +84,28 @@ export default function BookDetail() {
     setMounted(true);
   }, []);
   
-  if (!mounted || !book) {
-    return <div className={styles.loading}>Yükleniyor...</div>;
+  if (!mounted) {
+    return <div className={styles.loading}>Loading...</div>;
+  }
+
+  if (!book) {
+    return <div className={styles.loading}>There is no book with this id</div>;
   }
   
-  // Yıldız puanı gösterimi için fonksiyon
-  const renderStars = (rating) => {
-    const fullStars = Math.floor(rating);
-    const hasHalfStar = rating - fullStars >= 0.5;
-    const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
-    
-    return (
-      <div className={styles.stars}>
-        {[...Array(fullStars)].map((_, i) => (
-          <span key={`full-${i}`} className={styles.star}>★</span>
-        ))}
-        {hasHalfStar && <span className={styles.star}>☆</span>}
-        {[...Array(emptyStars)].map((_, i) => (
-          <span key={`empty-${i}`} className={styles.emptyStar}>☆</span>
-        ))}
-        <span className={styles.ratingValue}>({book.rating})</span>
-      </div>
-    );
-  };
   
   return (
     <>
       <Head>
-        <title>{book.name} - Kitap Detayları</title>
-        <meta name="description" content={`${book.name} kitap bilgileri`} />
+        <title>{book.name} - Book Details</title>
+        <meta name="description" content={`${book.name} book information`} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <div className={`${styles.container} ${geistSans.variable} ${geistMono.variable}`}>
         <header className={styles.header}>
           <Link href="/" className={styles.backLink}>
-            ← Ana Sayfaya Dön
+            ← Return to Home Page
           </Link>
-          <h1 className={styles.name}>Kitap Detayları</h1>
+          <h1 className={styles.name}>Book Details</h1>
           <div className={styles.headerRight}>
             <ThemeToggle />
           </div>
@@ -141,13 +124,13 @@ export default function BookDetail() {
           <div className={styles.bookInfo}>
             <h2 className={styles.bookTitle}>{book.name}</h2>
             <div className={styles.bookMeta}>
-              <p><strong>Yazar:</strong> {book.author}</p>
-              <p><strong>Yayın Yılı:</strong> {book.year}</p>
-              <p><strong>Ortalama Skor:</strong> {book.avgScore ? book.avgScore : 0}</p>
+              <p><strong>Author:</strong> {book.author}</p>
+              <p><strong>Publication Year:</strong> {book.year}</p>
+              <p><strong>Average Score:</strong> {book.avgScore ? book.avgScore : 0}</p>
               
               {book?.currentOwner ? (
                 <div className={styles.ownerInfo}>
-                  <h3>Mevcut Sahibi</h3>
+                  <h3>Current Owner</h3>
                   <div className={styles.owner}>
                     <div className={styles.ownerImage}>
                       <Image 
@@ -167,7 +150,7 @@ export default function BookDetail() {
                   </div>
                 </div>
               ) : (
-                <p className={styles.availability}><strong>Durum:</strong> <span className={styles.available}>Mevcut</span></p>
+                <p className={styles.availability}><strong>State:</strong> <span className={styles.available}>Available</span></p>
               )}
             </div>
             
@@ -178,7 +161,7 @@ export default function BookDetail() {
                   onClick={handleBorrowClick}
                   disabled={isLoading}
                 >
-                  {isLoading ? 'İşlem yapılıyor...' : 'Ödünç Al'}
+                  {isLoading ? 'In Progress...' : 'Borrow'}
                 </button>
               )}
             </div>
@@ -186,7 +169,7 @@ export default function BookDetail() {
         </div>
         
         <div className={styles.bookDescription}>
-          <h3>Kitap Açıklaması</h3>
+          <h3>Book Description</h3>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisl eget aliquam ultricies, nunc nisl aliquet nunc, 
             quis aliquam nisl nunc sit amet nisl. Nullam euismod, nisl eget aliquam ultricies, nunc nisl aliquet nunc, quis aliquam nisl 
@@ -210,13 +193,13 @@ export default function BookDetail() {
                     className={styles.dialogConfirm} 
                     onClick={borrowBook}
                   >
-                    Evet
+                    Yes
                   </button>
                   <button 
                     className={styles.dialogCancel} 
                     onClick={() => setShowDialog(false)}
                   >
-                    Hayır
+                    No
                   </button>
                 </div>
               ) : (
@@ -225,7 +208,7 @@ export default function BookDetail() {
                     className={styles.dialogOk} 
                     onClick={() => setShowDialog(false)}
                   >
-                    Tamam
+                    OK
                   </button>
                 </div>
               )}
